@@ -1,107 +1,112 @@
 {
-    "formuls": [
-        {
-            "id": "eq-1",
-            "formula": "v = u + at",
-            "type": "Final velocity",
-            "click": 1
-        },
-        {
-            "id": "eq-2",
-            "formula": "s = ut + ½at²",
-            "type": "Displacement",
-            "click": 2
-        },
-        {
-            "id": "eq-3",
-            "formula": "v² = u² + 2as",
-            "type": "Velocity-displacement",
-            "click": 3
-        },
-        {
-            "id": "eq-4",
-            "formula": "s= {(u+v)/2}t",
-            "type": "displacement",
-            "click": 4
-        },
-        {
-            "id": "eq-5",
-            "formula": "v = u + gt",
-            "type": "displacement",
-            "click": 5
-        },
-        {
-            "id": "eq-6",
-            "formula": "h = ut + ½gt²",
-            "type": "Height",
-            "click": 6
-        },
-        {
-            "id": "eq-7",
-            "formula": "v² = u² + 2gh",
-            "type": "Height",
-            "click": 7
-        },
-        {
-            "id": "eq-8",
-            "formula": "F = ma",
-            "type": "Force",
-            "click": 8
-        },
-        {
-            "id": "eq-9",
-            "formula": "W = mg",
-            "type": "Weight",
-            "click": 9
-        },
-        {
-            "id": "eq-10",
-            "formula": "P = mv",
-            "type": "Momentum",
-            "click": 10
-        },
-        {
-            "id": "eq-11",
-            "formula": "K = p²/m",
-            "type": "Kinetic energy & Momentum",
-            "click": 11
-        },
-        {
-            "id": "eq-12",
-            "formula": "K = ½mv²",
-            "type": "Kinetic energy",
-            "click": 12
-        },
-        {
-            "id": "eq-13",
-            "formula": "U = mgh",
-            "type": "Potential energy",
-            "click": 13
-        },
-        {
-            "id": "eq-14",
-            "formula": "W = Fscos𝛳",
-            "type": "Work",
-            "click": 14
-        },
-        {
-            "id": "eq-15",
-            "formula": "P = W/t",
-            "type": "Power",
-            "click": 15
-        },
-        {
-            "id": "eq-16",
-            "formula": "V = IR",
-            "type": "Ohm’s Law",
-            "click": 16
-        },
-        {
-            "id": "eq-17",
-            "formula": "R = ρL/A",
-            "type": "Ohm’s Law",
-            "click": 17
-        }
-
-    ]
+  "formuls": [
+    {
+      "id": "eq-1",
+      "formula": "v = u + at",
+      "type": "Final velocity",
+      "click": 1
+    },
+    {
+      "id": "eq-2",
+      "formula": "s = ut + ½at²",
+      "type": "Displacement",
+      "click": 2
+    },
+    {
+      "id": "eq-3",
+      "formula": "v² = u² + 2as",
+      "type": "Velocity-displacement",
+      "click": 3
+    },
+    {
+      "id": "eq-4",
+      "formula": "s= {(u+v)/2}t",
+      "type": "displacement",
+      "click": 4
+    },
+    {
+      "id": "eq-5",
+      "formula": "v = u + gt",
+      "type": "displacement",
+      "click": 5
+    },
+    {
+      "id": "eq-6",
+      "formula": "h = ut + ½gt²",
+      "type": "Height",
+      "click": 6
+    },
+    {
+      "id": "eq-7",
+      "formula": "v² = u² + 2gh",
+      "type": "Height",
+      "click": 7
+    },
+    {
+      "id": "eq-8",
+      "formula": "F = ma",
+      "type": "Force",
+      "click": 8
+    },
+    {
+      "id": "eq-9",
+      "formula": "W = mg",
+      "type": "Weight",
+      "click": 9
+    },
+    {
+      "id": "eq-10",
+      "formula": "P = mv",
+      "type": "Momentum",
+      "click": 10
+    },
+    {
+      "id": "eq-11",
+      "formula": "K = p²/m",
+      "type": "Kinetic energy & Momentum",
+      "click": 11
+    },
+    {
+      "id": "eq-12",
+      "formula": "K = ½mv²",
+      "type": "Kinetic energy",
+      "click": 12
+    },
+    {
+      "id": "eq-13",
+      "formula": "U = mgh",
+      "type": "Potential energy",
+      "click": 13
+    },
+    {
+      "id": "eq-14",
+      "formula": "W = Fscos𝛳",
+      "type": "Work",
+      "click": 14
+    },
+    {
+      "id": "eq-15",
+      "formula": "P = W/t",
+      "type": "Power",
+      "click": 15
+    },
+    {
+      "id": "eq-16",
+      "formula": "V = IR",
+      "type": "Ohm’s Law",
+      "click": 16
+    },
+    {
+      "id": "eq-17",
+      "formula": "R = ρL/A",
+      "type": "Ohm’s Law",
+      "click": 17
+    },
+    {
+      "id": "eq-18",
+      "formula": "v = ωr",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 18
+    }
+  ]
 }
