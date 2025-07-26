@@ -240,11 +240,52 @@ const equations = {
   21: {
     formula: 'E = 1/2Iω²',
     variables: ['E', 'I', 'omega'],
-    units: { E: 'J', I: 'kgm²', r: 'rad/s' },
+    units: { E: 'J', I: 'kgm²', omega: 'rad/s' },
     labels: {
       E: 'Energy',
       I: 'Moment of inertia',
-      r: ' Angular velocity',
+      omega: ' Angular velocity',
+    },
+  },
+  22: {
+    formula: 'I=mr²',
+    variables: ['I', 'm', 'r'],
+    units: { I: 'kgm²', m: 'kg', r: 'm' },
+    labels: {
+      I: 'Moment of inertia',
+      m: 'Mass',
+      r: 'Radius',
+    },
+  },
+  23: {
+    formula: 'τ = Iα',
+    variables: ['τ', 'I', 'alpha'],
+    units: { τ: 'Nm', I: 'kgm²', α: 'rad/s²' },
+    labels: {
+      τ: 'Torque',
+      I: ' Moment of inertia',
+      α: 'Angular acceleration',
+    },
+  },
+  24: {
+    formula: 'tanθ = v²/rg',
+    variables: ['theta', 'v', 'r', 'g'],
+    units: { theta: '°', v: 'm/s', r: 'm', g: 'm/s²' },
+    labels: {
+      theta: 'angle ',
+      v: ' velocity',
+      r: 'Radius',
+      g: 'Gravitational acceleration',
+    },
+  },
+  25: {
+    formula: 'P = Fv',
+    variables: ['P', 'F', 'v'],
+    units: { P: 'kgm/s', F: 'N', v: 'm/s' },
+    labels: {
+      P: 'Momentum ',
+      F: 'Force',
+      v: ' velocity',
     },
   },
 };
@@ -431,6 +472,18 @@ function calculate() {
         break;
       case 21: // U = mgh
         result = calculateRotationalEnergy(values, selectedVariable);
+        break;
+      case 22: // U = mgh
+        result = calculateMomentOfInertia(values, selectedVariable);
+        break;
+      case 23: // U = mgh
+        result = calculateTorque(values, selectedVariable);
+        break;
+      case 24: // U = mgh
+        result = calculateTanTheta(values, selectedVariable);
+        break;
+      case 25: // U = mgh
+        result = calculatePowerFromForce(values, selectedVariable);
         break;
     }
 
@@ -1479,6 +1532,185 @@ function calculateRotationalEnergy(values, target) {
 
     default:
       throw new Error("Invalid target variable. Choose 'E', 'I', or 'omega'.");
+  }
+}
+
+function calculateMomentOfInertia(values, target) {
+  const { I, m, r } = values;
+
+  switch (target) {
+    case 'I':
+      if (isNaN(m) || isNaN(r))
+        throw new Error(
+          'Please enter valid values for mass (m) and radius (r).'
+        );
+      const result_I = m * r * r;
+      return {
+        value: result_I.toFixed(3),
+        steps: `I = ${m} × ${r}² = ${m} × ${r ** 2} = ${result_I.toFixed(3)}`,
+      };
+
+    case 'm':
+      if (isNaN(I) || isNaN(r))
+        throw new Error('Please enter valid values for I and r.');
+      if (r === 0) throw new Error('Radius (r) cannot be zero.');
+      const result_m = I / (r * r);
+      return {
+        value: result_m.toFixed(3),
+        steps: `m = ${I} ÷ (${r}²) = ${I} ÷ ${r ** 2} = ${result_m.toFixed(3)}`,
+      };
+
+    case 'r':
+      if (isNaN(I) || isNaN(m))
+        throw new Error('Please enter valid values for I and m.');
+      if (m === 0) throw new Error('Mass (m) cannot be zero.');
+      const result_r = Math.sqrt(I / m);
+      return {
+        value: result_r.toFixed(3),
+        steps: `r = √(${I} ÷ ${m}) = √(${(I / m).toFixed(
+          3
+        )}) = ${result_r.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target variable. Choose 'I', 'm', or 'r'.");
+  }
+}
+
+function calculateTorque(values, target) {
+  const { τ, I, alpha } = values;
+
+  switch (target) {
+    case 'τ':
+      if (isNaN(I) || isNaN(alpha))
+        throw new Error('Please enter valid values for I and α (alpha).');
+      const result_τ = I * alpha;
+      return {
+        value: result_τ.toFixed(3),
+        steps: `τ = ${I} × ${alpha} = ${result_τ.toFixed(3)}`,
+      };
+
+    case 'I':
+      if (isNaN(τ) || isNaN(alpha))
+        throw new Error('Please enter valid values for τ and α (alpha).');
+      if (alpha === 0) throw new Error('α (alpha) cannot be zero.');
+      const result_I = τ / alpha;
+      return {
+        value: result_I.toFixed(3),
+        steps: `I = ${τ} ÷ ${alpha} = ${result_I.toFixed(3)}`,
+      };
+
+    case 'alpha':
+      if (isNaN(τ) || isNaN(I))
+        throw new Error('Please enter valid values for τ and I.');
+      if (I === 0) throw new Error('Moment of inertia (I) cannot be zero.');
+      const result_alpha = τ / I;
+      return {
+        value: result_alpha.toFixed(3),
+        steps: `α = ${τ} ÷ ${I} = ${result_alpha.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target variable. Choose 'τ', 'I', or 'alpha'.");
+  }
+}
+
+function calculateTanTheta(values, target) {
+  const { theta, v, r, g } = values;
+
+  switch (target) {
+    case 'theta':
+      if (isNaN(v) || isNaN(r) || isNaN(g))
+        throw new Error('Please enter valid values for v, r, and g.');
+      if (r === 0 || g === 0)
+        throw new Error('Radius (r) and gravity (g) cannot be zero.');
+      const tanTheta = (v * v) / (r * g);
+      return {
+        value: tanTheta.toFixed(3),
+        steps: `tan(θ) = (${v}²) ÷ (${r} × ${g}) = ${v * v} ÷ ${
+          r * g
+        } = ${tanTheta.toFixed(3)}`,
+      };
+
+    case 'v':
+      if (isNaN(theta) || isNaN(r) || isNaN(g))
+        throw new Error('Please enter valid values for θ, r, and g.');
+      if (r === 0 || g === 0)
+        throw new Error('Radius (r) and gravity (g) cannot be zero.');
+      const result_v = Math.sqrt(theta * r * g);
+      return {
+        value: result_v.toFixed(3),
+        steps: `v² = θ × r × g = ${theta} × ${r} × ${g} = ${
+          theta * r * g
+        }, so v = √(${theta * r * g}) = ${result_v.toFixed(3)}`,
+      };
+
+    case 'r':
+      if (isNaN(theta) || isNaN(v) || isNaN(g))
+        throw new Error('Please enter valid values for θ, v, and g.');
+      if (g === 0 || theta === 0)
+        throw new Error('Gravity (g) and θ cannot be zero.');
+      const result_r = (v * v) / (theta * g);
+      return {
+        value: result_r.toFixed(3),
+        steps: `r = (${v}²) ÷ (${theta} × ${g}) = ${v * v} ÷ ${
+          theta * g
+        } = ${result_r.toFixed(3)}`,
+      };
+
+    case 'g':
+      if (isNaN(theta) || isNaN(v) || isNaN(r))
+        throw new Error('Please enter valid values for θ, v, and r.');
+      if (r === 0 || theta === 0)
+        throw new Error('Radius (r) and θ cannot be zero.');
+      const result_g = (v * v) / (theta * r);
+      return {
+        value: result_g.toFixed(3),
+        steps: `g = (${v}²) ÷ (${theta} × ${r}) = ${v * v} ÷ ${
+          theta * r
+        } = ${result_g.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target. Use 'theta', 'v', 'r', or 'g'.");
+  }
+}
+
+function calculatePowerFromForce(values, target) {
+  const { P, F, v } = values;
+
+  switch (target) {
+    case 'P':
+      if (isNaN(F) || isNaN(v))
+        throw new Error('Please enter valid values for F and v.');
+      const result_P = F * v;
+      return {
+        value: result_P.toFixed(3),
+        steps: `P = ${F} × ${v} = ${result_P.toFixed(3)}`,
+      };
+
+    case 'F':
+      if (isNaN(P) || isNaN(v))
+        throw new Error('Please enter valid values for P and v.');
+      if (v === 0) throw new Error('Velocity (v) cannot be zero.');
+      const result_F = P / v;
+      return {
+        value: result_F.toFixed(3),
+        steps: `F = ${P} ÷ ${v} = ${result_F.toFixed(3)}`,
+      };
+
+    case 'v':
+      if (isNaN(P) || isNaN(F))
+        throw new Error('Please enter valid values for P and F.');
+      if (F === 0) throw new Error('Force (F) cannot be zero.');
+      const result_v = P / F;
+      return {
+        value: result_v.toFixed(3),
+        steps: `v = ${P} ÷ ${F} = ${result_v.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target variable. Choose 'P', 'F', or 'v'.");
   }
 }
 

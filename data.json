@@ -125,6 +125,30 @@
       "formula": "E = 1/2Iω²",
       "type": "Realtion between Linier and Angular velocity",
       "click": 21
+    },
+    {
+      "id": "eq-22",
+      "formula": "I = mr²",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 22
+    },
+    {
+      "id": "eq-23",
+      "formula": "τ = Iα",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 23
+    },
+    {
+      "id": "eq-24",
+      "formula": "tanθ = v²/rg",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 24
+    },
+    {
+      "id": "eq-25",
+      "formula": "P = Fv",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 25
     }
   ]
 }
