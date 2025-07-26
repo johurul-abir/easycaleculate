@@ -107,6 +107,24 @@
       "formula": "v = ωr",
       "type": "Realtion between Linier and Angular velocity",
       "click": 18
+    },
+    {
+      "id": "eq-19",
+      "formula": "Fc = mv²/r",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 19
+    },
+    {
+      "id": "eq-20",
+      "formula": "a = v²/r",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 20
+    },
+    {
+      "id": "eq-21",
+      "formula": "E = 1/2Iω²",
+      "type": "Realtion between Linier and Angular velocity",
+      "click": 21
     }
   ]
 }

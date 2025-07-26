@@ -216,6 +216,37 @@ const equations = {
       r: 'Radius',
     },
   },
+  19: {
+    formula: 'Fc = mv²/r',
+    variables: ['Fc', 'm', 'v', 'r'],
+    units: { Fc: 'N', m: 'kg', v: 'm/s', r: 'm' },
+    labels: {
+      Fc: 'Centripetal force',
+      m: 'Mass',
+      v: 'Valucity',
+      r: 'Radius',
+    },
+  },
+  20: {
+    formula: 'a = v²/r',
+    variables: ['a', 'v', 'r'],
+    units: { a: 'm/s²', v: 'm/s', r: 'm' },
+    labels: {
+      a: 'Acceleration',
+      v: 'Valucity',
+      r: 'Radius',
+    },
+  },
+  21: {
+    formula: 'E = 1/2Iω²',
+    variables: ['E', 'I', 'omega'],
+    units: { E: 'J', I: 'kgm²', r: 'rad/s' },
+    labels: {
+      E: 'Energy',
+      I: 'Moment of inertia',
+      r: ' Angular velocity',
+    },
+  },
 };
 
 function selectEquation(eqNum) {
@@ -391,6 +422,15 @@ function calculate() {
         break;
       case 18: // U = mgh
         result = calculateLinearVelocity(values, selectedVariable);
+        break;
+      case 19: // U = mgh
+        result = calculateCentripetalForce(values, selectedVariable);
+        break;
+      case 20: // U = mgh
+        result = calculateCentripetalAcceleration(values, selectedVariable);
+        break;
+      case 21: // U = mgh
+        result = calculateRotationalEnergy(values, selectedVariable);
         break;
     }
 
@@ -1298,6 +1338,147 @@ function calculateLinearVelocity(values, target) {
 
     default:
       throw new Error("Invalid target variable. Choose 'v', 'omega', or 'r'.");
+  }
+}
+
+function calculateCentripetalForce(values, target) {
+  const { Fc, m, v, r } = values;
+
+  switch (target) {
+    case 'Fc':
+      if (isNaN(m) || isNaN(v) || isNaN(r))
+        throw new Error('Please enter valid values for m, v, and r.');
+      if (r === 0) throw new Error('Radius (r) cannot be zero.');
+      const result_Fc = (m * v * v) / r;
+      return {
+        value: result_Fc.toFixed(3),
+        steps: `Fc = (m × v²) ÷ r = (${m} × ${v}²) ÷ ${r} = ${result_Fc.toFixed(
+          3
+        )}`,
+      };
+
+    case 'm':
+      if (isNaN(Fc) || isNaN(v) || isNaN(r))
+        throw new Error('Please enter valid values for Fc, v, and r.');
+      if (v === 0) throw new Error('Velocity (v) cannot be zero.');
+      const result_m = (Fc * r) / (v * v);
+      return {
+        value: result_m.toFixed(3),
+        steps: `m = (Fc × r) ÷ v² = (${Fc} × ${r}) ÷ (${v}²) = ${result_m.toFixed(
+          3
+        )}`,
+      };
+
+    case 'v':
+      if (isNaN(Fc) || isNaN(m) || isNaN(r))
+        throw new Error('Please enter valid values for Fc, m, and r.');
+      if (m === 0) throw new Error('Mass (m) cannot be zero.');
+      const result_v = Math.sqrt((Fc * r) / m);
+      return {
+        value: result_v.toFixed(3),
+        steps: `v = √(Fc × r ÷ m) = √(${Fc} × ${r} ÷ ${m}) = ${result_v.toFixed(
+          3
+        )}`,
+      };
+
+    case 'r':
+      if (isNaN(Fc) || isNaN(m) || isNaN(v))
+        throw new Error('Please enter valid values for Fc, m, and v.');
+      if (Fc === 0) throw new Error('Force (Fc) cannot be zero.');
+      const result_r = (m * v * v) / Fc;
+      return {
+        value: result_r.toFixed(3),
+        steps: `r = (m × v²) ÷ Fc = (${m} × ${v}²) ÷ ${Fc} = ${result_r.toFixed(
+          3
+        )}`,
+      };
+
+    default:
+      throw new Error(
+        "Invalid target variable. Choose 'Fc', 'm', 'v', or 'r'."
+      );
+  }
+}
+
+function calculateCentripetalAcceleration(values, target) {
+  const { a, v, r } = values;
+
+  switch (target) {
+    case 'a':
+      if (isNaN(v) || isNaN(r))
+        throw new Error('Please enter valid values for v and r.');
+      if (r === 0) throw new Error('Radius (r) cannot be zero.');
+      const result_a = (v * v) / r;
+      return {
+        value: result_a.toFixed(3),
+        steps: `a = v² ÷ r = ${v}² ÷ ${r} = ${result_a.toFixed(3)}`,
+      };
+
+    case 'v':
+      if (isNaN(a) || isNaN(r))
+        throw new Error('Please enter valid values for a and r.');
+      const result_v = Math.sqrt(a * r);
+      return {
+        value: result_v.toFixed(3),
+        steps: `v = √(a × r) = √(${a} × ${r}) = ${result_v.toFixed(3)}`,
+      };
+
+    case 'r':
+      if (isNaN(v) || isNaN(a))
+        throw new Error('Please enter valid values for v and a.');
+      if (a === 0) throw new Error('Acceleration (a) cannot be zero.');
+      const result_r = (v * v) / a;
+      return {
+        value: result_r.toFixed(3),
+        steps: `r = v² ÷ a = ${v}² ÷ ${a} = ${result_r.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target variable. Choose 'a', 'v', or 'r'.");
+  }
+}
+
+function calculateRotationalEnergy(values, target) {
+  const { E, I, omega } = values;
+
+  switch (target) {
+    case 'E':
+      if (isNaN(I) || isNaN(omega))
+        throw new Error('Please enter valid values for I and ω (omega).');
+      const result_E = 0.5 * I * omega * omega;
+      return {
+        value: result_E.toFixed(3),
+        steps: `E = ½ × ${I} × ${omega}² = 0.5 × ${I} × ${
+          omega ** 2
+        } = ${result_E.toFixed(3)}`,
+      };
+
+    case 'I':
+      if (isNaN(E) || isNaN(omega))
+        throw new Error('Please enter valid values for E and ω (omega).');
+      if (omega === 0) throw new Error('ω (omega) cannot be zero.');
+      const result_I = (2 * E) / (omega * omega);
+      return {
+        value: result_I.toFixed(3),
+        steps: `I = (2 × ${E}) ÷ ${omega}² = ${2 * E} ÷ ${
+          omega ** 2
+        } = ${result_I.toFixed(3)}`,
+      };
+
+    case 'omega':
+      if (isNaN(E) || isNaN(I))
+        throw new Error('Please enter valid values for E and I.');
+      if (I === 0) throw new Error('Moment of inertia (I) cannot be zero.');
+      const result_omega = Math.sqrt((2 * E) / I);
+      return {
+        value: result_omega.toFixed(3),
+        steps: `ω = √((2 × ${E}) ÷ ${I}) = √(${
+          2 * E
+        } ÷ ${I}) = ${result_omega.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target variable. Choose 'E', 'I', or 'omega'.");
   }
 }
 
