@@ -1,28 +1,3 @@
-// size calculation for useing clamp
-
-function calculateClick() {
-  const size = document.getElementById('size').value;
-  const screenSize = document.getElementById('screen-size').value;
-  const vw = document.getElementById('vw');
-
-  if (size && screenSize) {
-    const resutl = (vw.value = (size * 100) / screenSize);
-    vw.value = resutl.toFixed(2);
-  } else {
-    vw.value = 'Input valu Invalid';
-  }
-}
-
-function clearClick() {
-  document.getElementById('size').value = '';
-  document.getElementById('screen-size').value = '';
-  document.getElementById('vw').value = '';
-}
-
-//================================
-//==caleculate physics formula ===
-//================================
-
 let currentEquation = null;
 let selectedVariable = null;
 const equations = {

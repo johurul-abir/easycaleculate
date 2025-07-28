@@ -1,186 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Calculate something</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculate something</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
-        <script>
-            tailwind.config = {
-                content: ["./index.html"],
-                theme: {
-                    extend: {},
-                },
-                plugins: [],
-            };
-        </script>
-    </head>
-    <body class="bg-gray-100 flex justify-center">
-        <div
-            class="main-container w-full max-w-7xl min-h-screen bg-white mx-auto p-4">
-            <div class="text-center mt-10">
-                <h1 class="text-3xl font-bold text-black mb-2">
-                    Calculate something
-                </h1>
-            </div>
-
-            <!-- Size calculation using clamp -->
-            <div class="card p-5 flex flex-col items-center">
-                <h1 class="text-[20px] mb-1">
-                    Calculate size for use clamp css fuction
-                </h1>
-                <form
-                    action=""
-                    class="flex gap-4 flex-wrap w-full justify-center max-w-5xl border border-blue-300 rounded p-5">
-                    <div class="item flex flex-col">
-                        <label for="size" class="text-sm sm:text-[16px]"
-                            >Targeted Size</label
-                        >
-                        <input
-                            type="number"
-                            id="size"
-                            class="w-full py-1 px-3 sm:p-3 border rounded" />
-                    </div>
-                    <div class="item flex flex-col">
-                        <label for="screen-size" class="text-sm sm:text-[16px]"
-                            >View screen size</label
-                        >
-                        <input
-                            type="number"
-                            id="screen-size"
-                            class="w-full py-1 px-3 sm:p-3 border rounded" />
-                    </div>
-                    <div class="item flex flex-col">
-                        <label
-                            for="vw"
-                            class="text-green-600 text-sm sm:text-[16px]"
-                            >VW</label
-                        >
-                        <input
-                            type="text"
-                            id="vw"
-                            class="w-full py-1 px-3 sm:p-3 border rounded" />
-                    </div>
-                    <div class="item flex items-end">
-                        <button
-                            type="button"
-                            class="bg-black text-white px-3 py-1 sm:px-4 sm:py-3 rounded"
-                            onclick="calculateClick()">
-                            Calculate now
-                        </button>
-                    </div>
-                    <div class="item flex items-end">
-                        <button
-                            type="button"
-                            class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-3 rounded"
-                            onclick="clearClick()">
-                            Clear
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!--using physics formulas  -->
-            <div class="max-w-2xl mx-auto mt-10">
-                <!-- Header -->
-                <div class="text-center sm:mb-8">
-                    <h1
-                        class="text-xl sm:text-3xl font-bold text-gray-800 mb-2">
-                        Physics Equations Calculator
-                    </h1>
-                    <p class="text-gray-600 text-sm sm:text-[18px]">
-                        Select an equation and find any variable
-                    </p>
-                </div>
-
-                <!-- Equation Selector -->
-                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-                    <h2
-                        class="text-md sm:text-lg font-semibold text-gray-700 mb-4">
-                        Choose Equation:
-                    </h2>
-                    <div class="flex flex-wrap gap-4" id="formulas"></div>
-                </div>
-
-                <!-- Main Calculator -->
-                <div
-                    id="calculator"
-                    class="bg-white rounded-lg shadow-lg p-4 sm:p-8 hidden">
-                    <!-- Current Formula Display -->
-                    <div
-                        class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-3 sm:p-6 mb-6 text-center">
-                        <h2 class="text-md sm:text-xl font-semibold mb-2">
-                            Current Equation
-                        </h2>
-                        <div
-                            id="current-formula"
-                            class="text-xl sm:text-3xl font-mono"></div>
-                    </div>
-
-                    <!-- Variable Selection -->
-                    <div class="mb-6">
-                        <p
-                            class="text-gray-700 text-center mb-4 text-sm sm:text-md sm:font-medium">
-                            Which variable do you want to find?
-                        </p>
-                        <div
-                            id="variable-buttons"
-                            class="flex justify-center gap-3 flex-wrap">
-                            <!-- Dynamic buttons will be inserted here -->
-                        </div>
-                    </div>
-
-                    <!-- Input Fields -->
-                    <div id="input-fields" class="space-y-4 mb-6">
-                        <!-- Dynamic input fields will be inserted here -->
-                    </div>
-
-                    <!-- Calculate Button -->
-                    <button
-                        onclick="calculate()"
-                        id="calc-btn"
-                        class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transform hover:scale-[1.02]"
-                        disabled>
-                        Calculate Result
-                    </button>
-
-                    <!-- Result Display -->
-                    <div
-                        id="result"
-                        class="mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg text-center hidden">
-                        <h3 class="text-lg font-semibold text-green-800 mb-2">
-                            ✅ Result:
-                        </h3>
-                        <div
-                            id="result-text"
-                            class="text-2xl font-bold text-green-600"></div>
-                        <div
-                            id="calculation-steps"
-                            class="mt-3 text-sm text-green-700"></div>
-                    </div>
-
-                    <!-- Error Display -->
-                    <div
-                        id="error"
-                        class="mt-4 p-4 bg-red-50 border border-red-300 text-red-700 rounded-lg hidden">
-                        <div class="flex items-center">
-                            <span class="text-red-500 mr-2">⚠️</span>
-                            <span id="error-text" class="font-medium"></span>
-                        </div>
-                    </div>
-
-                    <!-- Reset Button -->
-                    <button
-                        onclick="resetCalculator()"
-                        class="w-full mt-4 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                        Reset & Choose New Equation
-                    </button>
-                </div>
-            </div>
+    <script>
+      tailwind.config = {
+        content: ['./index.html'],
+        theme: {
+          extend: {},
+        },
+        plugins: [],
+      };
+    </script>
+  </head>
+  <body class="bg-gray-100 flex justify-center">
+    <div
+      class="main-container w-full max-w-7xl min-h-screen bg-white mx-auto p-4"
+    >
+      <!--using physics formulas  -->
+      <div class="max-w-2xl mx-auto mt-10">
+        <!-- Header -->
+        <div class="text-center sm:mb-2">
+          <h1 class="text-xl sm:text-3xl font-bold text-gray-800 mb-2">
+            Physics Equations Calculator
+          </h1>
+          <p class="text-gray-600 text-sm sm:text-[18px]">
+            Select an equation and find any variable
+          </p>
         </div>
-        <script src="script.js"></script>
-        <script src="design-loop.js"></script>
-    </body>
-</html>
 
+        <!-- Search Input -->
+        <div class="mb-6">
+          <label class="block mb-2 text-gray-700 font-medium"
+            >Search formulas by variables (e.g., v, u, a, t, s)</label
+          >
+          <div class="relative bg-purple-50 rounded border border-purple-400">
+            <!-- Icon -->
+            <i
+              class="fa-solid fa-magnifying-glass text-purple-600 absolute top-1/2 left-3 transform -translate-y-1/2 z-10 pointer-events-none"
+            ></i>
+            <!-- Input -->
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Enter variables to search (e.g., v, a, t)"
+              class="pl-10 pr-3 py-2 w-full bg-transparent rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <!-- Equation Selector -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h2 class="text-md sm:text-lg font-semibold text-gray-700 mb-4">
+            Choose Equation:
+          </h2>
+          <div id="resultsCount" class="mb-4 text-gray-600"></div>
+          <div class="flex flex-wrap gap-4" id="formulas"></div>
+          <div id="noResults" class="hidden text-center py-8 text-gray-500">
+            <i class="fa-solid fa-search text-4xl mb-4"></i>
+            <p class="text-lg">No formulas found matching your search.</p>
+            <p class="text-sm">
+              Try searching for variables like: v, u, a, t, s
+            </p>
+          </div>
+        </div>
+
+        <!-- Main Calculator -->
+        <div
+          id="calculator"
+          class="bg-white rounded-lg shadow-lg p-4 sm:p-8 hidden"
+        >
+          <!-- Current Formula Display -->
+          <div
+            class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-3 sm:p-6 mb-6 text-center"
+          >
+            <h2 class="text-md sm:text-xl font-semibold mb-2">
+              Current Equation
+            </h2>
+            <div
+              id="current-formula"
+              class="text-xl sm:text-3xl font-mono"
+            ></div>
+          </div>
+
+          <!-- Variable Selection -->
+          <div class="mb-6">
+            <p
+              class="text-gray-700 text-center mb-4 text-sm sm:text-md sm:font-medium"
+            >
+              Which variable do you want to find?
+            </p>
+            <div
+              id="variable-buttons"
+              class="flex justify-center gap-3 flex-wrap"
+            >
+              <!-- Dynamic buttons will be inserted here -->
+            </div>
+          </div>
+
+          <!-- Input Fields -->
+          <div id="input-fields" class="space-y-4 mb-6">
+            <!-- Dynamic input fields will be inserted here -->
+          </div>
+
+          <!-- Calculate Button -->
+          <button
+            onclick="calculate()"
+            id="calc-btn"
+            class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transform hover:scale-[1.02]"
+            disabled
+          >
+            Calculate Result
+          </button>
+
+          <!-- Result Display -->
+          <div
+            id="result"
+            class="mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg text-center hidden"
+          >
+            <h3 class="text-lg font-semibold text-green-800 mb-2">
+              ✅ Result:
+            </h3>
+            <div
+              id="result-text"
+              class="text-2xl font-bold text-green-600"
+            ></div>
+            <div
+              id="calculation-steps"
+              class="mt-3 text-sm text-green-700"
+            ></div>
+          </div>
+
+          <!-- Error Display -->
+          <div
+            id="error"
+            class="mt-4 p-4 bg-red-50 border border-red-300 text-red-700 rounded-lg hidden"
+          >
+            <div class="flex items-center">
+              <span class="text-red-500 mr-2">⚠️</span>
+              <span id="error-text" class="font-medium"></span>
+            </div>
+          </div>
+
+          <!-- Reset Button -->
+          <button
+            onclick="resetCalculator()"
+            class="w-full mt-4 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          >
+            Reset & Choose New Equation
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="design-loop.js"></script>
+  </body>
+</html>
