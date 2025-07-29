@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculate something</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
 
     <script>
       tailwind.config = {
@@ -43,9 +39,14 @@
           >
           <div class="relative bg-purple-50 rounded border border-purple-400">
             <!-- Icon -->
-            <i
+            <img
+              src="assets/img/search.png"
+              alt=""
+              class="fa-solid w-5 h-5 fa-magnifying-glass text-purple-600 absolute top-1/2 left-3 transform -translate-y-1/2 z-10 pointer-events-none"
+            />
+            <!-- <i
               class="fa-solid fa-magnifying-glass text-purple-600 absolute top-1/2 left-3 transform -translate-y-1/2 z-10 pointer-events-none"
-            ></i>
+            ></i> -->
             <!-- Input -->
             <input
               type="text"
@@ -156,6 +157,223 @@
           >
             Reset & Choose New Equation
           </button>
+        </div>
+      </div>
+
+      <!--  3x3 Linear Equation System Solver -->
+      <div class="container mx-auto max-w-2xl">
+        <div class="bg-gray-50 rounded-lg shadow-lg p-8">
+          <h1 class="text-xl font-bold text-center mb-4 text-gray-800">
+            3x3 Linear Equation System Solver
+          </h1>
+
+          <div class="flex flex-col gap-3">
+            <!-- Input Section -->
+            <div class="space-y-6">
+              <h2 class="text-md font-semibold text-gray-800 mb-2">
+                Enter Coefficients
+              </h2>
+              <div class="flex flex-col gap-2 text-gray-600 font-mono mb-6">
+                <!-- Equation 1 -->
+                <div class="equation-row w-full flex gap-1 justify-between">
+                  <!-- item -->
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">x +</span>
+                    <input
+                      type="number"
+                      id="a1"
+                      class="coefficient-input border-2 border-blue-300 rounded-md px-2 py-1 focus:border-blue-500 focus:outline-none"
+                      placeholder="a₁"
+                      step="any"
+                    />
+                  </div>
+
+                  <!-- item -->
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">y +</span>
+                    <input
+                      type="number"
+                      id="b1"
+                      class="coefficient-input border-2 border-green-300 rounded-md px-2 py-1 focus:border-green-500 focus:outline-none"
+                      placeholder="b₁"
+                      step="any"
+                    />
+                  </div>
+
+                  <!-- item -->
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">z +</span>
+                    <input
+                      type="number"
+                      id="c1"
+                      class="coefficient-input border-2 border-purple-300 rounded-md px-2 py-1 focus:border-purple-500 focus:outline-none"
+                      placeholder="c₁"
+                      step="any"
+                    />
+                  </div>
+
+                  <!-- item -->
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">const =</span>
+                    <input
+                      type="number"
+                      id="d1"
+                      class="coefficient-input border-2 border-red-300 rounded-md px-2 py-1 focus:border-red-500 focus:outline-none"
+                      placeholder="d₁"
+                      step="any"
+                    />
+                  </div>
+                  <span class="text-lg font-medium"> 0</span>
+                </div>
+
+                <!-- Equation 2 -->
+                <div class="equation-row w-full flex gap-1 justify-between">
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">x +</span>
+                    <input
+                      type="number"
+                      id="a2"
+                      class="coefficient-input border-2 border-blue-300 rounded-md px-2 py-1 focus:border-blue-500 focus:outline-none"
+                      placeholder="a₂"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">y +</span>
+                    <input
+                      type="number"
+                      id="b2"
+                      class="coefficient-input border-2 border-green-300 rounded-md px-2 py-1 focus:border-green-500 focus:outline-none"
+                      placeholder="b₂"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">z +</span>
+                    <input
+                      type="number"
+                      id="c2"
+                      class="coefficient-input border-2 border-purple-300 rounded-md px-2 py-1 focus:border-purple-500 focus:outline-none"
+                      placeholder="c₂"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">const =</span>
+                    <input
+                      type="number"
+                      id="d2"
+                      class="coefficient-input border-2 border-red-300 rounded-md px-2 py-1 focus:border-red-500 focus:outline-none"
+                      placeholder="d₂"
+                      step="any"
+                    />
+                  </div>
+                  <span class="text-lg font-medium">0</span>
+                </div>
+
+                <!-- Equation 3 -->
+                <div class="equation-row w-full flex gap-1 justify-between">
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">x +</span>
+                    <input
+                      type="number"
+                      id="a3"
+                      class="coefficient-input border-2 border-blue-300 rounded-md px-2 py-1 focus:border-blue-500 focus:outline-none"
+                      placeholder="a₃"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">y +</span>
+                    <input
+                      type="number"
+                      id="b3"
+                      class="coefficient-input border-2 border-green-300 rounded-md px-2 py-1 focus:border-green-500 focus:outline-none"
+                      placeholder="b₃"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">z +</span>
+                    <input
+                      type="number"
+                      id="c3"
+                      class="coefficient-input border-2 border-purple-300 rounded-md px-2 py-1 focus:border-purple-500 focus:outline-none"
+                      placeholder="c₃"
+                      step="any"
+                    />
+                  </div>
+
+                  <div class="w-[23%] flex flex-col gap-1">
+                    <span class="text-lg font-medium">const= </span>
+                    <input
+                      type="number"
+                      id="d3"
+                      class="coefficient-input border-2 border-red-300 rounded-md px-2 py-1 focus:border-red-500 focus:outline-none"
+                      placeholder="d₃"
+                      step="any"
+                    />
+                  </div>
+
+                  <span class="text-lg font-medium">0</span>
+                </div>
+              </div>
+
+              <!-- Solve Button -->
+              <div class="text-center">
+                <button
+                  id="solveBtn"
+                  class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                >
+                  SOLVE EQUATIONS
+                </button>
+              </div>
+            </div>
+
+            <!-- Result Section -->
+            <div
+              class="result-section text-black rounded-lg p-6 bg-green-50 border-2 border-green-300 flex flex-col items-center"
+            >
+              <div class="w-[250px]">
+                <h2 class="text-2xl font-bold mb-6 text-center text-green-600">
+                  Result
+                </h2>
+
+                <div class="space-y-4 text-lg">
+                  <div
+                    class="flex justify-between items-center bg-white bg-opacity-20 rounded-lg p-1"
+                  >
+                    <span class="font-semibold">x =</span>
+                    <span id="resultX" class="font-mono text-xl">-</span>
+                  </div>
+
+                  <div
+                    class="flex justify-between items-center bg-white bg-opacity-20 rounded-lg p-1"
+                  >
+                    <span class="font-semibold">y =</span>
+                    <span id="resultY" class="font-mono text-xl">-</span>
+                  </div>
+
+                  <div
+                    class="flex justify-between items-center bg-white bg-opacity-20 rounded-lg p-1"
+                  >
+                    <span class="font-semibold">z =</span>
+                    <span id="resultZ" class="font-mono text-xl">-</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                id="statusMessage"
+                class="mt-4 p-3 rounded-lg text-center font-medium w-full"
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

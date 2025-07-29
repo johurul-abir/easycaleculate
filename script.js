@@ -263,6 +263,27 @@ const equations = {
       v: ' velocity',
     },
   },
+  26: {
+    formula: 'g = GM/R²',
+    variables: ['g', 'M', 'R'],
+    units: { g: 'm/s²', M: 'kg', R: 'm' },
+    labels: {
+      g: 'Gravitational acceleration',
+      M: 'Mass',
+      R: 'distance from the center of the mass',
+    },
+  },
+  27: {
+    formula: 'g_h = g((1-2h/R)',
+    variables: ['g_h', 'g', 'h', 'R'],
+    units: { g_h: 'm', g: 'm/s²', h: 'm', R: 'm' },
+    labels: {
+      g_h: "gravity at height h above Earth's surface",
+      g: 'Gravitational acceleration',
+      h: 'Deep from Earth surface',
+      R: 'distance from the center of the mass',
+    },
+  },
 };
 
 function selectEquation(eqNum) {
@@ -459,6 +480,12 @@ function calculate() {
         break;
       case 25: // U = mgh
         result = calculatePowerFromForce(values, selectedVariable);
+        break;
+      case 26: // U = mgh
+        result = calculateGravitationalField(values, selectedVariable);
+        break;
+      case 27: // U = mgh
+        result = calculateGravityAtHeight(values, selectedVariable);
         break;
     }
 
@@ -1686,6 +1713,96 @@ function calculatePowerFromForce(values, target) {
 
     default:
       throw new Error("Invalid target variable. Choose 'P', 'F', or 'v'.");
+  }
+}
+
+function calculateGravitationalField(values, target) {
+  const G = 6.674e-11; // gravitational constant
+  const { g, M, R } = values;
+
+  switch (target) {
+    case 'g':
+      if (isNaN(M) || isNaN(R))
+        throw new Error('Please enter valid values for M and R.');
+      if (R === 0) throw new Error('Radius R cannot be zero.');
+      const result_g = (G * M) / (R * R);
+      return {
+        value: result_g.toExponential(3),
+        steps: `g = (G × M) / R² = (${G} × ${M}) / (${R}²) = ${result_g.toExponential(
+          3
+        )}`,
+      };
+
+    case 'M':
+      if (isNaN(g) || isNaN(R))
+        throw new Error('Please enter valid values for g and R.');
+      const result_M = (g * R * R) / G;
+      return {
+        value: result_M.toExponential(3),
+        steps: `M = (g × R²) / G = (${g} × ${R}²) / ${G} = ${result_M.toExponential(
+          3
+        )}`,
+      };
+
+    case 'R':
+      if (isNaN(g) || isNaN(M))
+        throw new Error('Please enter valid values for g and M.');
+      if (g === 0) throw new Error('g cannot be zero.');
+      const result_R = Math.sqrt((G * M) / g);
+      return {
+        value: result_R.toExponential(3),
+        steps: `R = √[(G × M) / g] = √[(${G} × ${M}) / ${g}] = ${result_R.toExponential(
+          3
+        )}`,
+      };
+
+    default:
+      throw new Error("Invalid target. Use 'g', 'M', or 'R'.");
+  }
+}
+
+function calculateGravityAtHeight(values, target) {
+  const { g_h, g, h, R } = values;
+
+  switch (target) {
+    case 'g_h':
+      if (isNaN(g) || isNaN(h) || isNaN(R))
+        throw new Error('Please enter valid values for g, h, and R.');
+      const result_gh = g * (1 - (2 * h) / R);
+      return {
+        value: result_gh.toFixed(5),
+        steps: `gₕ = ${g} × (1 - 2 × ${h} ÷ ${R}) = ${result_gh.toFixed(5)}`,
+      };
+
+    case 'g':
+      if (isNaN(g_h) || isNaN(h) || isNaN(R))
+        throw new Error('Please enter valid values for gₕ, h, and R.');
+      const result_g = g_h / (1 - (2 * h) / R);
+      return {
+        value: result_g.toFixed(5),
+        steps: `g = ${g_h} ÷ (1 - 2 × ${h} ÷ ${R}) = ${result_g.toFixed(5)}`,
+      };
+
+    case 'h':
+      if (isNaN(g_h) || isNaN(g) || isNaN(R))
+        throw new Error('Please enter valid values for gₕ, g, and R.');
+      const result_h = ((1 - g_h / g) * R) / 2;
+      return {
+        value: result_h.toFixed(3),
+        steps: `h = (1 - ${g_h} ÷ ${g}) × ${R} ÷ 2 = ${result_h.toFixed(3)}`,
+      };
+
+    case 'R':
+      if (isNaN(g_h) || isNaN(g) || isNaN(h))
+        throw new Error('Please enter valid values for gₕ, g, and h.');
+      const result_R = (2 * h) / (1 - g_h / g);
+      return {
+        value: result_R.toFixed(3),
+        steps: `R = 2 × ${h} ÷ (1 - ${g_h} ÷ ${g}) = ${result_R.toFixed(3)}`,
+      };
+
+    default:
+      throw new Error("Invalid target. Choose 'g_h', 'g', 'h', or 'R'.");
   }
 }
 

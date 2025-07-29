@@ -176,6 +176,20 @@ const formulaData = {
       variables: ['P', 'F', 'v'],
       click: 25,
     },
+    {
+      id: 'eq-26',
+      formula: 'g = GM/R²',
+      type: 'Realtion between Linier and Angular velocity',
+      variables: ['g', 'M', 'R'],
+      click: 26,
+    },
+    {
+      id: 'eq-27',
+      formula: 'g<sub>h</sub> = g((1-2h/R)',
+      type: 'Calculate Gravity At Height',
+      variables: ['g_h', 'g', 'h', 'R'],
+      click: 27,
+    },
   ],
 };
 
@@ -263,5 +277,123 @@ function initializeApp() {
   renderFormulas(allFormulas);
 }
 
+// 3x3 Linear Equation System Solver
+function determinant3x3(matrix) {
+  const [[a, b, c], [d, e, f], [g, h, i]] = matrix;
+  return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+}
+
+function cramerRule(coeffMatrix, constants) {
+  const det = determinant3x3(coeffMatrix);
+
+  if (Math.abs(det) < 1e-10) {
+    return null; // System is singular
+  }
+
+  // Create matrices for Cramer's rule
+  const matrixX = [
+    [-constants[0], coeffMatrix[0][1], coeffMatrix[0][2]],
+    [-constants[1], coeffMatrix[1][1], coeffMatrix[1][2]],
+    [-constants[2], coeffMatrix[2][1], coeffMatrix[2][2]],
+  ];
+
+  const matrixY = [
+    [coeffMatrix[0][0], -constants[0], coeffMatrix[0][2]],
+    [coeffMatrix[1][0], -constants[1], coeffMatrix[1][2]],
+    [coeffMatrix[2][0], -constants[2], coeffMatrix[2][2]],
+  ];
+
+  const matrixZ = [
+    [coeffMatrix[0][0], coeffMatrix[0][1], -constants[0]],
+    [coeffMatrix[1][0], coeffMatrix[1][1], -constants[1]],
+    [coeffMatrix[2][0], coeffMatrix[2][1], -constants[2]],
+  ];
+
+  return {
+    x: determinant3x3(matrixX) / det,
+    y: determinant3x3(matrixY) / det,
+    z: determinant3x3(matrixZ) / det,
+  };
+}
+
+function getInputValues() {
+  const coeffMatrix = [
+    [
+      parseFloat(document.getElementById('a1').value) || 0,
+      parseFloat(document.getElementById('b1').value) || 0,
+      parseFloat(document.getElementById('c1').value) || 0,
+    ],
+    [
+      parseFloat(document.getElementById('a2').value) || 0,
+      parseFloat(document.getElementById('b2').value) || 0,
+      parseFloat(document.getElementById('c2').value) || 0,
+    ],
+    [
+      parseFloat(document.getElementById('a3').value) || 0,
+      parseFloat(document.getElementById('b3').value) || 0,
+      parseFloat(document.getElementById('c3').value) || 0,
+    ],
+  ];
+
+  const constants = [
+    parseFloat(document.getElementById('d1').value) || 0,
+    parseFloat(document.getElementById('d2').value) || 0,
+    parseFloat(document.getElementById('d3').value) || 0,
+  ];
+
+  return { coeffMatrix, constants };
+}
+
+function displayResult(result, status) {
+  const resultX = document.getElementById('resultX');
+  const resultY = document.getElementById('resultY');
+  const resultZ = document.getElementById('resultZ');
+  const statusMessage = document.getElementById('statusMessage');
+
+  if (result) {
+    resultX.textContent = result.x.toFixed(4);
+    resultY.textContent = result.y.toFixed(4);
+    resultZ.textContent = result.z.toFixed(4);
+    statusMessage.textContent = '✅ Solution found!';
+    statusMessage.className =
+      'mt-4 p-3 rounded-lg text-center font-medium bg-green-500 bg-opacity-30';
+  } else {
+    resultX.textContent = '-';
+    resultY.textContent = '-';
+    resultZ.textContent = '-';
+    statusMessage.textContent = status || '❌ No unique solution exists';
+    statusMessage.className =
+      'mt-4 p-3 rounded-lg text-center font-medium bg-red-500 bg-opacity-30';
+  }
+}
+
+function solveEquations() {
+  const { coeffMatrix, constants } = getInputValues();
+
+  // Check if all coefficients are zero
+  const allZero = coeffMatrix.every(row => row.every(val => val === 0));
+  if (allZero) {
+    displayResult(null, '⚠️ Please enter some coefficients');
+    return;
+  }
+
+  const result = cramerRule(coeffMatrix, constants);
+
+  if (result) {
+    displayResult(result);
+  } else {
+    displayResult(null, '❌ System has no unique solution (determinant = 0)');
+  }
+}
+
+// Event listeners
+document.getElementById('solveBtn').addEventListener('click', solveEquations);
+
+// Allow Enter key to solve
+document.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    solveEquations();
+  }
+});
 // Start the app when page loads
 window.addEventListener('DOMContentLoaded', initializeApp);
