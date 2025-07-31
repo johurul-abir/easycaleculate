@@ -386,8 +386,47 @@ function solveEquations() {
   }
 }
 
+function loadExample() {
+  // Example: 2x + 3y + z - 8 = 0, x - y + 2z - 1 = 0, 3x + 2y - z - 2 = 0
+  document.getElementById('a1').value = '';
+  document.getElementById('b1').value = '';
+  document.getElementById('c1').value = '';
+  document.getElementById('d1').value = '';
+
+  document.getElementById('a2').value = '';
+  document.getElementById('b2').value = '';
+  document.getElementById('c2').value = '';
+  document.getElementById('d2').value = '';
+
+  document.getElementById('a3').value = '';
+  document.getElementById('b3').value = '';
+  document.getElementById('c3').value = '';
+  document.getElementById('d3').value = '';
+
+  const resultX = document.getElementById('resultX');
+  const resultY = document.getElementById('resultY');
+  const resultZ = document.getElementById('resultZ');
+
+  resultX.textContent = '-';
+  resultY.textContent = '-';
+  resultZ.textContent = '-';
+}
+
+const clearBtn = document.getElementById('clear-btn');
+const linearQueationResult = document.getElementById('linearQueationResult');
+
+clearBtn.addEventListener('click', function () {
+  loadExample();
+  this.style.display = 'none';
+  linearQueationResult.style.display = 'none';
+});
+
 // Event listeners
-document.getElementById('solveBtn').addEventListener('click', solveEquations);
+document.getElementById('solveBtn').addEventListener('click', () => {
+  clearBtn.style.display = 'block';
+  linearQueationResult.style.display = 'block';
+  solveEquations();
+});
 
 // Allow Enter key to solve
 document.addEventListener('keypress', function (e) {
